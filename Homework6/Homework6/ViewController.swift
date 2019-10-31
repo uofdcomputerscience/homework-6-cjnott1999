@@ -15,13 +15,43 @@ class ViewController: UIViewController {
     @IBOutlet var selectionButton: UIButton!
     @IBOutlet var continueButton: UIButton!
     
+    var correctSegmentClicked: Bool?
+    var selectionSwitchIsOn: Bool? = true
+    var selectionButtonWasTapped: Bool = false
+    
     @IBAction func segmentedControllerDidChangeValue(_ sender: UISegmentedControl) {
+        if segmentedController.selectedSegmentIndex == 1 {
+            correctSegmentClicked = true
+        }
+        else{
+            correctSegmentClicked?.toggle()
+        }
+        enableButton()
     }
     
     @IBAction func selectionSwitchDidChangeValue(_ sender: UISwitch) {
+        if selectionSwitch.isOn{
+            selectionSwitchIsOn = true
+        }
+        else{
+            selectionSwitchIsOn?.toggle()
+        }
+        enableButton()
     }
     
     @IBAction func selectionButtonTapped(_ sender: UIButton) {
+        selectionButtonWasTapped.toggle()
+        enableButton()
     }
+    
+    func enableButton(){
+        if correctSegmentClicked ?? false && selectionSwitchIsOn ?? false && selectionButtonWasTapped{
+            continueButton.isEnabled = true
+        }
+        else{
+            continueButton.isEnabled = false
+        }
+    }
+    
 }
 
